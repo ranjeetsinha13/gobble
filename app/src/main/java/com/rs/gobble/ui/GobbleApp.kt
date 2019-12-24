@@ -1,21 +1,16 @@
 package com.rs.gobble.ui
 
 import android.content.res.Resources
-import androidx.annotation.DrawableRes
 import androidx.compose.Composable
 import androidx.compose.state
 import androidx.compose.unaryPlus
 import androidx.ui.core.Text
-import androidx.ui.core.dp
-import androidx.ui.foundation.Clickable
-import androidx.ui.graphics.vector.DrawVector
 import androidx.ui.layout.*
 import androidx.ui.material.*
-import androidx.ui.material.ripple.Ripple
 import androidx.ui.res.imageResource
-import androidx.ui.res.vectorResource
 import androidx.ui.tooling.preview.Preview
 import com.rs.gobble.R
+import com.rs.gobble.ui.widgets.searchForm
 
 private enum class Sections(val title: String, val icon: Int) {
     Discover("Discover", android.R.drawable.ic_menu_search),
@@ -57,27 +52,10 @@ fun GobbleApp(res: Resources) {
 
 @Composable
 private fun DiscoverTab() {
-    Text("1")
+    searchForm()
 }
 
 @Composable
 private fun favoritesTab() {
     Text("2")
-}
-
-@Composable
-private fun BottomBarAction(
-    @DrawableRes id: Int,
-    onClick: () -> Unit
-) {
-    Ripple(
-        bounded = false,
-        radius = 24.dp
-    ) {
-        Clickable(onClick = onClick) {
-            Container(modifier = Spacing(12.dp) wraps Size(24.dp, 24.dp)) {
-                DrawVector(+vectorResource(id))
-            }
-        }
-    }
 }
