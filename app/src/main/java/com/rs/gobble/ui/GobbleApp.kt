@@ -5,6 +5,8 @@ import androidx.compose.Composable
 import androidx.compose.state
 import androidx.compose.unaryPlus
 import androidx.ui.core.Text
+import androidx.ui.core.dp
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.layout.*
 import androidx.ui.material.*
 import androidx.ui.res.imageResource
@@ -43,6 +45,7 @@ fun GobbleApp(res: Resources) {
 
         Container(modifier = Flexible(1f)) {
             when (section) {
+
                 Sections.Discover -> DiscoverTab()
                 Sections.Favorites -> favoritesTab()
             }
@@ -52,7 +55,26 @@ fun GobbleApp(res: Resources) {
 
 @Composable
 private fun DiscoverTab() {
-    searchForm()
+    Column {
+        searchForm("") { query ->
+
+            if (query.isEmpty()) {
+                return@searchForm
+            }
+            // TODO send the query to viewModel and update the UI
+        }
+        VerticalScroller(modifier = Flexible(1f)) {
+            Column {
+                arrayListOf<String>("1", "2", "3").map {
+                    Row {
+                        Padding(10.dp, 2.dp, 2.dp, 10.dp) {
+                            Text(it, style = Typography().body1)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @Composable

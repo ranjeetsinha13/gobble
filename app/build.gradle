@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -16,10 +15,12 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField("String", "GOBBLE_API_KEY", API_KEY)
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            buildConfigField("String", "GOBBLE_API_KEY", API_KEY)
             minifyEnabled false
         }
     }
@@ -38,11 +39,20 @@ ext {
     appcompat_version = '1.1.0'
     junit_version = '4.12'
     compose_version = '0.1.0-dev03'
+    dagger_version = '2.24'
+    retrofit_version = '2.6.2'
+    okhttp_version = '4.2.2'
+    gson_version = '2.8.6'
+    multidex_version= '2.0.1'
+    lifecycle_version = '1.1.1'
+    viewmodel_ktx_version = '2.2.0-rc03'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Compose
     implementation "androidx.compose:compose-runtime:$compose_version"
     implementation "androidx.ui:ui-core:$compose_version"
     implementation "androidx.ui:ui-layout:$compose_version"
@@ -53,5 +63,32 @@ dependencies {
     implementation "androidx.ui:ui-tooling:$compose_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "androidx.core:core-ktx:$appcompat_version"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Okhttp
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
+    // LiveData and ViewModel
+    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_ktx_version"
+
+    // testing
     testImplementation "junit:junit:$junit_version"
+
+    // Dagger
+
+    //Multidex
+    implementation "androidx.multidex:multidex:$multidex_version"
 }

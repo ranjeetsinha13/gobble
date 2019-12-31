@@ -17,8 +17,8 @@ import androidx.ui.layout.Padding
 import androidx.ui.layout.Row
 import androidx.ui.layout.Spacing
 import androidx.ui.material.MaterialTheme
+import androidx.ui.material.Typography
 import androidx.ui.material.surface.Card
-import androidx.ui.text.TextStyle
 
 import androidx.ui.tooling.preview.Preview
 import com.rs.gobble.R
@@ -26,14 +26,15 @@ import com.rs.gobble.ui.VectorImage
 
 @Composable
 @Preview
-fun searchForm(hintText: String = "") {
+fun searchForm(hintText: String = "", onSearch: (String) -> Unit) {
 
     MaterialTheme {
         Row(
-            modifier = Spacing(left = 8.dp, right = 8.dp)
+            modifier = Spacing(left = 8.dp, right = 8.dp, top = 8.dp, bottom = 8.dp)
         ) {
             Card(
-                shape = RoundedCornerShape(10.dp), border = Border((+MaterialTheme.colors()).primaryVariant, 2.dp)
+                shape = RoundedCornerShape(10.dp),
+                border = Border((+MaterialTheme.colors()).primaryVariant, 2.dp)
             ) {
                 Row {
                     Padding(8.dp) {
@@ -46,9 +47,7 @@ fun searchForm(hintText: String = "") {
                             flexible(1f) {
                                 SingleLineEditText(
                                     state,
-                                    onImeActionPerformed = {
-                                        state.value.text
-                                    }
+                                    onSearch
                                 )
                             }
                         }
@@ -62,22 +61,17 @@ fun searchForm(hintText: String = "") {
 @Composable
 fun SingleLineEditText(
     state: State<EditorModel>,
-    onImeActionPerformed: (ImeAction) -> Unit = {
-    }
+    onSearch: (String) -> Unit
 ) {
 
     TextField(
         value = state.value,
         onValueChange = { new ->
-            state.value = if (new.text.any { it == '\n' }) {
-                state.value
-            } else {
-                new
-            }
+            state.value = new
+            onSearch(state.value.text)
         },
         keyboardType = KeyboardType.Text,
         imeAction = ImeAction.Search,
-        textStyle = TextStyle(color = Color.DarkGray),
-        onImeActionPerformed = onImeActionPerformed
+        textStyle = Typography().body1
     )
 }
