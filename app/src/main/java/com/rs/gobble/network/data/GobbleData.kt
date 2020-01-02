@@ -2,7 +2,11 @@ package com.rs.gobble.network.data
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchResponse(val results: List<Recipe>)
+data class SearchResponse(
+    val results: List<Recipe>,
+    val baseUri: String
+)
+
 
 data class Recipe(
     val id: Long,
