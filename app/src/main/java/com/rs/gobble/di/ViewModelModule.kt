@@ -15,7 +15,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(SearchViewModel::class)
-    abstract fun bindFavoriteShowsViewModel(favoriteShowsViewModel: SearchViewModel): ViewModel
+    abstract fun bindSearchViewModel(favoriteShowsViewModel: SearchViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: GobbleViewModelFactory): ViewModelProvider.Factory

@@ -13,7 +13,8 @@ import javax.inject.Singleton
         NetworkModule::class,
         AppModule::class,
         ViewModelModule::class,
-        ActivityBuildersModule::class]
+        ActivityBuildersModule::class,
+        FragmentBuildersModule::class]
 )
 interface AppComponent {
     fun inject(application: GobbleApplication)

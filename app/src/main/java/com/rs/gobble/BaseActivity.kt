@@ -1,6 +1,7 @@
 package com.rs.gobble
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -14,4 +15,9 @@ open class BaseActivity : AppCompatActivity(), HasAndroidInjector {
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Any>
 
     override fun androidInjector(): AndroidInjector<Any> = dispatchingAndroidInjector
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
+    }
 }
