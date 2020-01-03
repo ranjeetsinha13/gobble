@@ -1,6 +1,6 @@
 package com.rs.gobble.network
 
-sealed class ResponseState
-data class NetworkError(val message: String?) : ResponseState()
-object Loading : ResponseState()
-data class Success(val data: Any) : ResponseState()
+sealed class ResponseState<out T>
+data class NetworkError<Nothing>(val message: String?) : ResponseState<Nothing>()
+object Loading : ResponseState<Nothing>()
+data class Success<out T>(val data: T) : ResponseState<T>()

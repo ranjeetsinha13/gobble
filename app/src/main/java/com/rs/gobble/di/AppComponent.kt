@@ -14,7 +14,8 @@ import javax.inject.Singleton
         AppModule::class,
         ViewModelModule::class,
         ActivityBuildersModule::class,
-        FragmentBuildersModule::class]
+        FragmentBuildersModule::class,
+        GobbleDbModule::class]
 )
 interface AppComponent {
     fun inject(application: GobbleApplication)

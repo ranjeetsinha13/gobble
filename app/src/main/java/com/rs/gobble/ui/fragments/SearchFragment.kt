@@ -4,20 +4,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.Composable
+import androidx.compose.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.ui.core.Text
 import androidx.ui.core.dp
 import androidx.ui.core.setContent
-import androidx.ui.foundation.VerticalScroller
-import androidx.ui.layout.Column
-import androidx.ui.layout.Padding
-import androidx.ui.layout.Row
-import androidx.ui.material.Typography
+import androidx.ui.foundation.Clickable
+import androidx.ui.layout.*
+import androidx.ui.material.ripple.Ripple
 import com.rs.gobble.R
 import com.rs.gobble.di.Injectable
+import com.rs.gobble.extensions.observeData
+import com.rs.gobble.network.Loading
+import com.rs.gobble.network.NetworkError
+import com.rs.gobble.network.ResponseState
+import com.rs.gobble.network.Success
 import com.rs.gobble.ui.widgets.searchForm
 import com.rs.gobble.viewmodels.SearchViewModel
 import javax.inject.Inject
@@ -49,23 +52,46 @@ class SearchFragment : Fragment(), Injectable {
 
     @Composable
     private fun discoverTab() {
-        Column {
-            searchForm("") { query ->
-
-                if (query.isEmpty()) {
-                    return@searchForm
-                }
-                // TODO send the query to viewModel and update the UI
-            }
-            VerticalScroller(modifier = Flexible(1f)) {
-                Column {
-                    arrayListOf<String>("1", "2", "3").map {
-                        Row {
-                            Padding(10.dp, 2.dp, 2.dp, 10.dp) {
-                                Text(it, style = Typography().body1)
-                            }
-                        }
+        FlexColumn {
+            inflexible {
+                searchForm("") { query ->
+                    if (query.isEmpty()) {
+                        return@searchForm
                     }
+                    viewModel.getSearchResponse(query)
+                }
+            }
+            flexible(1.0f) {
+                val responseState = +viewModel.searchResponseLiveData.observeData()
+                setViewState(responseState)
+            }
+        }
+    }
+
+    @Composable
+    private fun <T> setViewState(responseState: ResponseState<T>?) {
+
+        when (responseState) {
+            is Loading -> {
+                Text("Loading")
+            }
+            is Success -> {
+                Text("Success")
+            }
+            is NetworkError -> {
+                Text("Error")
+            }
+        }
+    }
+
+    @Composable
+    private fun SingleRecipeView(recipe: String) {
+        Ripple(bounded = true) {
+            Clickable(onClick = {
+                // navigateTo(Screen.Article(post.id))
+            }) {
+                Row(modifier = Spacing(16.dp)) {
+                    Text(recipe)
                 }
             }
         }

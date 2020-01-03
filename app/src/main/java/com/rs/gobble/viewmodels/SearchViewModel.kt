@@ -3,22 +3,31 @@ package com.rs.gobble.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rs.gobble.network.GobbleApi
-import com.rs.gobble.network.ResponseState
-import com.rs.gobble.network.Success
+import com.rs.gobble.network.*
+import com.rs.gobble.network.data.SearchResponse
+import com.rs.gobble.repository.GobbleRepository
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class SearchViewModel @Inject constructor(private val gobbleApi: GobbleApi) : ViewModel() {
+class SearchViewModel @Inject constructor(private val gobbleRepository: GobbleRepository) :
+    ViewModel() {
 
-    private val searchResponseLiveData: MutableLiveData<ResponseState> = MutableLiveData()
+    val searchResponseLiveData: MutableLiveData<ResponseState<SearchResponse>> = MutableLiveData()
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, exception ->
+        onError(exception)
+    }
 
     fun getSearchResponse(query: String) {
 
-        viewModelScope.launch {
-            gobbleApi.searchRecipes(query)
-
-            searchResponseLiveData.value = Success(gobbleApi.searchRecipes(query))
+        searchResponseLiveData.value = Loading
+        viewModelScope.launch(coroutineExceptionHandler) {
+            searchResponseLiveData.value = Success(gobbleRepository.searchRecipes(query))
         }
+    }
+
+    private fun onError(throwable: Throwable) {
+        searchResponseLiveData.value = NetworkError(throwable.message)
     }
 }

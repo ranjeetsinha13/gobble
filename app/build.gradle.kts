@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -40,7 +38,6 @@ android {
         val options = this as org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
         options.jvmTarget = "1.8"
     }
-
 }
 
 dependencies {
@@ -64,15 +61,14 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:${LibVersions.daggerVersion}")
     kapt("com.google.dagger:dagger-android-processor:${LibVersions.daggerVersion}")
 
-
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:${LibVersions.retrofitVersion}")
     implementation("com.google.code.gson:gson:${LibVersions.gsonVersion}")
     implementation("com.squareup.retrofit2:converter-gson:${LibVersions.retrofitVersion}")
 
     // Okhttp
-    implementation ("com.squareup.okhttp3:logging-interceptor:${LibVersions.okhttpVersion}")
-    implementation ("com.squareup.okhttp3:okhttp:${LibVersions.okhttpVersion}")
+    implementation("com.squareup.okhttp3:logging-interceptor:${LibVersions.okhttpVersion}")
+    implementation("com.squareup.okhttp3:okhttp:${LibVersions.okhttpVersion}")
 
     // LiveData and ViewModel
     implementation("android.arch.lifecycle:extensions:${LibVersions.lifecycleVersion}")
@@ -80,6 +76,7 @@ dependencies {
 
     // Room
     implementation("androidx.room:room-runtime:${LibVersions.roomVersion}")
+    implementation("androidx.room:room-ktx:${LibVersions.roomVersion}")
     kapt("androidx.room:room-compiler:${LibVersions.roomVersion}")
 
     // testing
@@ -87,6 +84,6 @@ dependencies {
 
     // Dagger
 
-    //Multidex
+    // Multidex
     implementation("androidx.multidex:multidex:${LibVersions.multidexVersion}")
 }
