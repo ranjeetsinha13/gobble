@@ -79,6 +79,10 @@ dependencies {
     implementation("androidx.room:room-ktx:${LibVersions.roomVersion}")
     kapt("androidx.room:room-compiler:${LibVersions.roomVersion}")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:${LibVersions.glideVersion}")
+    annotationProcessor("com.github.bumptech.glide:compiler:${LibVersions.glideVersion}")
+
     // testing
     testImplementation("junit:junit:${LibVersions.junitVersion}")
 

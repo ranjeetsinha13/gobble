@@ -12,6 +12,7 @@ import androidx.ui.core.Text
 import androidx.ui.core.dp
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Clickable
+import androidx.ui.foundation.VerticalScroller
 import androidx.ui.layout.*
 import androidx.ui.material.ripple.Ripple
 import com.rs.gobble.R
@@ -21,6 +22,10 @@ import com.rs.gobble.network.Loading
 import com.rs.gobble.network.NetworkError
 import com.rs.gobble.network.ResponseState
 import com.rs.gobble.network.Success
+import com.rs.gobble.network.data.Recipe
+import com.rs.gobble.network.data.SearchResponse
+import com.rs.gobble.ui.widgets.divider
+import com.rs.gobble.ui.widgets.progressIndicator
 import com.rs.gobble.ui.widgets.searchForm
 import com.rs.gobble.viewmodels.SearchViewModel
 import javax.inject.Inject
@@ -73,10 +78,10 @@ class SearchFragment : Fragment(), Injectable {
 
         when (responseState) {
             is Loading -> {
-                Text("Loading")
+                progressIndicator()
             }
             is Success -> {
-                Text("Success")
+                recipeListSection((responseState.data as SearchResponse).results)
             }
             is NetworkError -> {
                 Text("Error")
@@ -85,13 +90,25 @@ class SearchFragment : Fragment(), Injectable {
     }
 
     @Composable
-    private fun SingleRecipeView(recipe: String) {
+    private fun recipeListSection(results: List<Recipe>) {
+        VerticalScroller {
+            Column {
+                results.map {
+                    singleRecipeView(it)
+                    divider()
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun singleRecipeView(recipe: Recipe) {
         Ripple(bounded = true) {
             Clickable(onClick = {
                 // navigateTo(Screen.Article(post.id))
             }) {
                 Row(modifier = Spacing(16.dp)) {
-                    Text(recipe)
+                    Text(recipe.title)
                 }
             }
         }
