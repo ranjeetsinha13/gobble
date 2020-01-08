@@ -13,5 +13,5 @@ object LibVersions {
     const val lifecycleVersion = "1.1.1"
     const val viewModelKtxVersion = "2.2.0-rc03"
     const val roomVersion = "2.2.3"
-    const val glideVersion = "4.10.0"
+    const val picassoVersion = "2.71828"
 }

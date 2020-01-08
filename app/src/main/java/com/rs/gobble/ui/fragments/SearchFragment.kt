@@ -13,6 +13,7 @@ import androidx.ui.core.dp
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.VerticalScroller
+import androidx.ui.graphics.Image
 import androidx.ui.layout.*
 import androidx.ui.material.ripple.Ripple
 import com.rs.gobble.R
@@ -81,7 +82,7 @@ class SearchFragment : Fragment(), Injectable {
                 progressIndicator()
             }
             is Success -> {
-                recipeListSection((responseState.data as SearchResponse).results)
+                recipeListSection((responseState.data as SearchResponse))
             }
             is NetworkError -> {
                 Text("Error")
@@ -90,11 +91,12 @@ class SearchFragment : Fragment(), Injectable {
     }
 
     @Composable
-    private fun recipeListSection(results: List<Recipe>) {
+    private fun recipeListSection(searchResponse: SearchResponse) {
+        val results = searchResponse.results
         VerticalScroller {
             Column {
                 results.map {
-                    singleRecipeView(it)
+                    singleRecipeView(it, searchResponse.baseUri)
                     divider()
                 }
             }
@@ -102,13 +104,33 @@ class SearchFragment : Fragment(), Injectable {
     }
 
     @Composable
-    private fun singleRecipeView(recipe: Recipe) {
+    private fun singleRecipeView(recipe: Recipe, baseUri: String) {
+
         Ripple(bounded = true) {
             Clickable(onClick = {
                 // navigateTo(Screen.Article(post.id))
             }) {
-                Row(modifier = Spacing(16.dp)) {
-                    Text(recipe.title)
+                Padding(4.dp, 4.dp, 4.dp, 4.dp) {
+                    FlexRow {
+                        inflexible {
+                            Row(
+                                modifier = Size(96.dp, 144.dp),
+                                arrangement = Arrangement.SpaceEvenly
+                            ) {
+                                com.rs.gobble.ui.widgets.Image(
+                                    "$baseUri${recipe.imageUrl}",
+                                    144.dp,
+                                    96.dp
+                                )
+                            }
+                        }
+                        flexible(1.0f) {
+                            Column {
+                                Text(recipe.title)
+                                Text(recipe.readyInMinutes.toString())
+                            }
+                        }
+                    }
                 }
             }
         }
