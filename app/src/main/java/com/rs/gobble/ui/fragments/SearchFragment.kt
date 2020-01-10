@@ -13,7 +13,6 @@ import androidx.ui.core.dp
 import androidx.ui.core.setContent
 import androidx.ui.foundation.Clickable
 import androidx.ui.foundation.VerticalScroller
-import androidx.ui.graphics.Image
 import androidx.ui.layout.*
 import androidx.ui.material.ripple.Ripple
 import com.rs.gobble.R

@@ -84,6 +84,9 @@ dependencies {
 
     // testing
     testImplementation("junit:junit:${LibVersions.junitVersion}")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${LibVersions.coroutinesTestVersion}")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${LibVersions.mockitoVersion}")
+    testImplementation("androidx.arch.core:core-testing:${LibVersions.coreTestingArch}")
 
     // Dagger
 

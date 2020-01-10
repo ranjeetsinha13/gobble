@@ -14,4 +14,8 @@ object LibVersions {
     const val viewModelKtxVersion = "2.2.0-rc03"
     const val roomVersion = "2.2.3"
     const val picassoVersion = "2.71828"
+    const val coroutinesTestVersion = "1.3.2"
+    const val mockitoVersion = "2.2.0"
+    const val coreTestingArch = "2.1.0"
+    const val googleTruthVersion = "1.0"
 }
