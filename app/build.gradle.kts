@@ -2,14 +2,13 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
-    kotlin("android.extensions")
 }
 android {
-    compileSdkVersion(29)
+    compileSdk = 30
     defaultConfig {
         applicationId = "com.rs.gobble"
-        minSdkVersion(21)
-        targetSdkVersion(29)
+        minSdk = 21
+        targetSdk = 30
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -44,52 +43,14 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${LibVersions.kotlinVersion}")
     // Compose
-    implementation("androidx.compose:compose-runtime:${LibVersions.composeVersion}")
-    implementation("androidx.ui:ui-core:${LibVersions.composeVersion}")
-    implementation("androidx.ui:ui-layout:${LibVersions.composeVersion}")
-    implementation("androidx.ui:ui-framework:${LibVersions.composeVersion}")
-    implementation("androidx.ui:ui-material:${LibVersions.composeVersion}")
-    implementation("androidx.ui:ui-foundation:${LibVersions.composeVersion}")
-    implementation("androidx.ui:ui-text:${LibVersions.composeVersion}")
-    implementation("androidx.ui:ui-tooling:${LibVersions.composeVersion}")
+    implementation("androidx.compose.ui:ui:${LibVersions.composeVersion}")
+    implementation("androidx.compose.foundation:foundation:${LibVersions.composeVersion}")
+    implementation("androidx.compose.runtime:runtime-livedata:${LibVersions.composeVersion}")
+    implementation("androidx.compose.material:material:${LibVersions.composeVersion}")
+    implementation("androidx.compose.material:material-icons-core:${LibVersions.composeVersion}")
+    implementation("androidx.compose.material:material-icons-extended:${LibVersions.composeVersion}")
+
+
     implementation("androidx.appcompat:appcompat:${LibVersions.appcompatVersion}")
     implementation("androidx.core:core-ktx:${LibVersions.appcompatVersion}")
-
-    // Dagger
-    implementation("com.google.dagger:dagger:${LibVersions.daggerVersion}")
-    implementation("com.google.dagger:dagger-android-support:${LibVersions.daggerVersion}")
-    kapt("com.google.dagger:dagger-compiler:${LibVersions.daggerVersion}")
-    kapt("com.google.dagger:dagger-android-processor:${LibVersions.daggerVersion}")
-
-    // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:${LibVersions.retrofitVersion}")
-    implementation("com.google.code.gson:gson:${LibVersions.gsonVersion}")
-    implementation("com.squareup.retrofit2:converter-gson:${LibVersions.retrofitVersion}")
-
-    // Okhttp
-    implementation("com.squareup.okhttp3:logging-interceptor:${LibVersions.okhttpVersion}")
-    implementation("com.squareup.okhttp3:okhttp:${LibVersions.okhttpVersion}")
-
-    // LiveData and ViewModel
-    implementation("android.arch.lifecycle:extensions:${LibVersions.lifecycleVersion}")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${LibVersions.viewModelKtxVersion}")
-
-    // Room
-    implementation("androidx.room:room-runtime:${LibVersions.roomVersion}")
-    implementation("androidx.room:room-ktx:${LibVersions.roomVersion}")
-    kapt("androidx.room:room-compiler:${LibVersions.roomVersion}")
-
-    // Picasso
-    implementation("com.squareup.picasso:picasso:${LibVersions.picassoVersion}")
-
-    // testing
-    testImplementation("junit:junit:${LibVersions.junitVersion}")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${LibVersions.coroutinesTestVersion}")
-    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:${LibVersions.mockitoVersion}")
-    testImplementation("androidx.arch.core:core-testing:${LibVersions.coreTestingArch}")
-
-    // Dagger
-
-    // Multidex
-    implementation("androidx.multidex:multidex:${LibVersions.multidexVersion}")
 }
